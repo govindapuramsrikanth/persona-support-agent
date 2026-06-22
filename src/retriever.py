@@ -1,76 +1,40 @@
 import chromadb
-from sentence_transformers import SentenceTransformer
-
-from src.document_loader import load_documents
 
 
-# Load embedding model
-model = SentenceTransformer(
-    "all-MiniLM-L6-v2"
-)
-
-
-# Create Chroma database
+# Create ChromaDB client
 client = chromadb.PersistentClient(
     path="vector_db"
 )
 
 
+# Create / Load collection
 collection = client.get_or_create_collection(
-    name="support_docs"
+    name="documents"
 )
 
 
 
-def create_vector_database():
+def retrieve_documents(query):
 
-    documents = load_documents()
-
-
-    for index, doc in enumerate(documents):
-
-        embedding = model.encode(
-            doc["content"]
-        ).tolist()
-
-
-        collection.add(
-            ids=[str(index)], 
-            embeddings=[embedding],
-            documents=[doc["content"]],
-            metadatas=[
-                {
-                    "source": doc["file_name"]
-                }
-            ]
+    try:
+        results = collection.query(
+            query_texts=[query],
+            n_results=3
         )
 
 
-    print("Vector Database Created Successfully")
+        documents = results.get("documents", [])
 
 
-def retrieve_documents(query):
-
-    query_embedding = model.encode(
-        query
-    ).tolist()
+        if documents and len(documents) > 0:
+            return documents[0]
 
 
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=3
-    )
+        return []
 
 
-    return results["documents"][0] 
+    except Exception as e:
 
+        print("Retriever Error:", e)
 
-
-
-if __name__ == "__main__":
-
-    answer = retrieve_documents(
-        "How many days do I have for refund?"
-    )
-
-    print(answer)
+        return []

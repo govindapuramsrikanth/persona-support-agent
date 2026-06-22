@@ -6,6 +6,5 @@ langchain
 langchain-groq
 langchain-community
 chromadb
-sentence-transformers
 pypdf
 python-multipart
