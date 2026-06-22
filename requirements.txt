@@ -2,6 +2,9 @@ fastapi
 uvicorn
 python-dotenv
 groq
-chromadb
-sentence-transformers
-pydantic
+langchain
+langchain-groq
+langchain-community
+faiss-cpu
+pypdf
+python-multipart
