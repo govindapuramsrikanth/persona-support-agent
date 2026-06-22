@@ -5,6 +5,6 @@ groq
 langchain
 langchain-groq
 langchain-community
-faiss-cpu
+chromadb
 pypdf
 python-multipart
