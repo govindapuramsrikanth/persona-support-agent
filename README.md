@@ -1,66 +1,144 @@
-# AI Persona Support Agent 🤖
+# 🤖 AI Support Agent
+
+An intelligent AI-powered customer support assistant that understands customer queries, remembers conversation context, detects customer emotions, and escalates serious issues by creating support tickets.
+
+---
+
+## 🚀 Features
+
+### 💬 AI Chat Support
+- Users can ask support-related questions
+- AI generates human-like responses
+- Maintains conversation context
+
+### 🧠 RAG (Retrieval Augmented Generation)
+- Loads company documents
+- Retrieves relevant policy information
+- Provides accurate answers based on knowledge base
+
+### 🎭 Customer Persona Detection
+Detects customer emotions like:
+
+- Angry customers
+- Normal users
+- Confused users
+
+and changes responses accordingly.
+
+### 🚨 Human Escalation System
+Automatically detects serious complaints and creates support tickets.
+
+Example:
+
+User:
+"I requested refund many times. Nobody helped me."
+
+System:
+- Detects frustration
+- Creates ticket
+- Sends escalation response
 
 
-An intelligent customer support AI agent using FastAPI, Llama AI, and RAG architecture.
+### 🎫 Ticket Management
+
+Stores escalated issues with:
+
+- Ticket ID
+- Customer problem
+- Emotion
+- Status
+- Created time
 
 
-## Features
+---
 
-- AI powered customer conversations
-- RAG based knowledge retrieval
-- Customer emotion detection
-- Persona based responses
-- Human escalation system
-- Automatic ticket creation
-- Chat history storage
-- Modern chatbot UI
-
-
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Backend
 - Python
 - FastAPI
-- Groq Llama
-- Vector Database
-- RAG Pipeline
+- Uvicorn
 
+### AI
+- Groq API
+- Llama 3 Model
+
+### Vector Search
+- Sentence Transformers
+- Vector Database
 
 ### Frontend
 - HTML
 - CSS
 - JavaScript
 
-
-## Architecture
-
-User
- ↓
-Frontend Chat Interface
- ↓
-FastAPI Backend
- ↓
-RAG + Llama AI
- ↓
-Response Generator
+### Version Control
+- Git
+- GitHub
 
 
-## Run Project
+---
+
+## 📂 Project Structure
+persona-support-agent/
+
+├── src/
+│ ├── document_loader.py
+│ ├── retriever.py
+│ ├── persona_detector.py
+│ ├── response_generator.py
+│ ├── escalation.py
+│ └── ticket_manager.py
+│
+├── frontend/
+│ ├── index.html
+│ ├── style.css
+│ └── script.js
+│
+├── data/
+│ └── refund_policy.md
+│
+├── api.py
+├── requirements.txt
+└── README.md
 
 
-Install dependencies
 
+---
+
+## ▶️ How To Run
+
+Clone repository:
+
+```bash
+git clone <repository-url>
+
+
+
+Install dependencies:
 pip install -r requirements.txt
 
 
-Start backend
 
+Start backend:
 uvicorn api:app
 
 
-Open frontend/index.html
+
+Open frontend:
+src/frontend/index.html
 
 
-## Author
 
-Raipally Srikanth
+🌟 Future Improvements
+User authentication
+Database integration
+Admin dashboard
+Voice support
+WhatsApp integration
+
+
+
+👨‍💻 Developer
+
+Built by Srikanth Raipally
