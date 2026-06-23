@@ -1,49 +1,45 @@
 // Load old messages when page opens
 window.onload = function () {
 
-    let oldChats = JSON.parse(localStorage.getItem("chatHistory")) || []
+    let oldChats = JSON.parse(localStorage.getItem("chatHistory")) || [];
 
-    let chatBox = document.getElementById("chat-box")
+    let chatBox = document.getElementById("chat-box");
 
 
     oldChats.forEach(chat => {
 
-        chatBox.innerHTML +=
-        `
-        <div class="${chat.type}">
-            ${chat.message}
-        </div>
-        `
+        chatBox.innerHTML += `
+            <div class="${chat.type}">
+                ${chat.message}
+            </div>
+        `;
 
-    })
+    });
 
 
-    chatBox.scrollTop = chatBox.scrollHeight
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-}
-
+};
 
 
 
 
+// Save chat history
 function saveChat(type, message) {
 
+    let chats = JSON.parse(localStorage.getItem("chatHistory")) || [];
 
-    let chats = JSON.parse(localStorage.getItem("chatHistory")) || []
 
-
-    chats.push(
-        {
-            type: type,
-            message: message
-        }
-    )
+    chats.push({
+        type: type,
+        message: message
+    });
 
 
     localStorage.setItem(
         "chatHistory",
         JSON.stringify(chats)
-    )
+    );
 
 }
 
@@ -52,63 +48,62 @@ function saveChat(type, message) {
 
 
 
+// Send message
 async function sendMessage() {
 
 
-    let input = document.getElementById("user-input")
+    let input = document.getElementById("user-input");
 
-
-    let question = input.value
+    let question = input.value;
 
 
 
     if (question.trim() === "") {
-        return
+        return;
     }
 
 
 
-    let chatBox = document.getElementById("chat-box")
+    let chatBox = document.getElementById("chat-box");
 
 
 
 
 
-    // show user message
+    // Show user message
 
-    chatBox.innerHTML +=
-        `
+    chatBox.innerHTML += `
         <div class="user">
             ${question}
         </div>
-        `
+    `;
 
 
-    saveChat("user", question)
-
-
-
-    input.value = ""
+    saveChat("user", question);
 
 
 
+    input.value = "";
 
 
-    // typing animation
-
-    let typingId = "typing"
 
 
-    chatBox.innerHTML +=
-        `
+
+
+    // Typing animation
+
+    let typingId = "typing";
+
+
+    chatBox.innerHTML += `
         <div class="bot" id="${typingId}">
             🤖 AI is typing...
         </div>
-        `
+    `;
 
 
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-    chatBox.scrollTop = chatBox.scrollHeight
 
 
 
@@ -131,52 +126,58 @@ async function sendMessage() {
                 },
 
 
+                body: JSON.stringify({
 
-                body: JSON.stringify(
-                    {
+                    message: question
 
-                        message: question
-
-                    }
-                )
+                })
 
             }
-        )
+        );
 
 
 
 
-        let data = await response.json()
-
-
-
-
-
-        // remove typing message
-
-        document.getElementById(typingId).remove()
+        let data = await response.json();
 
 
 
 
 
-        // show AI answer
+        // Remove typing animation
 
-        chatBox.innerHTML +=
-            `
+        document.getElementById(typingId).remove();
+
+
+
+
+
+
+        // Format AI answer with line breaks
+
+        let aiAnswer = data.answer.replace(/\n/g, "<br>");
+
+
+
+
+
+
+        // Show AI answer
+
+        chatBox.innerHTML += `
             <div class="bot">
-                ${data.answer}
+                ${aiAnswer}
             </div>
-            `
-
-
-
-        saveChat("bot", data.answer)
+        `;
 
 
 
 
-        chatBox.scrollTop = chatBox.scrollHeight
+        saveChat("bot", aiAnswer);
+
+
+
+        chatBox.scrollTop = chatBox.scrollHeight;
 
 
     }
@@ -185,23 +186,23 @@ async function sendMessage() {
     catch (error) {
 
 
-        document.getElementById(typingId).remove()
+        document.getElementById(typingId).remove();
 
 
-        chatBox.innerHTML +=
-            `
+
+        chatBox.innerHTML += `
             <div class="bot">
                 ❌ Server error. Please try again.
             </div>
-            `
+        `;
 
 
-        console.log(error)
+        console.log(error);
+
 
     }
 
 
-
 }
 
 
@@ -209,13 +210,15 @@ async function sendMessage() {
 
 
 
+
+// Clear chat
 function clearChat() {
 
 
-    localStorage.removeItem("chatHistory")
+    localStorage.removeItem("chatHistory");
 
 
-    document.getElementById("chat-box").innerHTML = ""
+    document.getElementById("chat-box").innerHTML = "";
 
 
 }
@@ -224,6 +227,10 @@ function clearChat() {
 
 
 
+
+
+
+// Send message using Enter key
 
 document
     .getElementById("user-input")
@@ -235,13 +242,11 @@ document
 
             if (event.key === "Enter") {
 
-
-                sendMessage()
-
+                sendMessage();
 
             }
 
 
         }
 
-    )
+    );
