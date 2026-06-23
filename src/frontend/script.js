@@ -1,5 +1,5 @@
 // Load old messages when page opens
-window.onload = function(){
+window.onload = function () {
 
     let oldChats = JSON.parse(localStorage.getItem("chatHistory")) || []
 
@@ -26,7 +26,7 @@ window.onload = function(){
 
 
 
-function saveChat(type, message){
+function saveChat(type, message) {
 
 
     let chats = JSON.parse(localStorage.getItem("chatHistory")) || []
@@ -51,7 +51,8 @@ function saveChat(type, message){
 
 
 
-async function sendMessage(){
+
+async function sendMessage() {
 
 
     let input = document.getElementById("user-input")
@@ -61,7 +62,7 @@ async function sendMessage(){
 
 
 
-    if(question.trim() === ""){
+    if (question.trim() === "") {
         return
     }
 
@@ -72,14 +73,15 @@ async function sendMessage(){
 
 
 
+
     // show user message
 
     chatBox.innerHTML +=
-    `
-    <div class="user">
-        ${question}
-    </div>
-    `
+        `
+        <div class="user">
+            ${question}
+        </div>
+        `
 
 
     saveChat("user", question)
@@ -91,87 +93,123 @@ async function sendMessage(){
 
 
 
+
     // typing animation
 
     let typingId = "typing"
 
 
     chatBox.innerHTML +=
-    `
-    <div class="bot" id="${typingId}">
-        🤖 AI is typing...
-    </div>
-    `
-
-
-    chatBox.scrollTop = chatBox.scrollHeight
-
-
-
-
-
-    let response = await fetch(
-        "https://persona-support-agent-q4pf.onrender.com/chat",
-        {
-
-            method: "POST",
-
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-
-            body: JSON.stringify(
-                {
-                    question: question
-                }
-            )
-
-        }
-    )
-
-
-
-
-    let data = await response.json()
-
-
-
-
-    // remove typing
-
-    document.getElementById(typingId).remove()
-
-
-
-
-    // show bot message
-
-    chatBox.innerHTML +=
-    `
-    <div class="bot">
-        ${data.answer}
-    </div>
-    `
-
-
-
-    saveChat("bot", data.answer)
-
+        `
+        <div class="bot" id="${typingId}">
+            🤖 AI is typing...
+        </div>
+        `
 
 
 
     chatBox.scrollTop = chatBox.scrollHeight
+
+
+
+
+
+    try {
+
+
+        let response = await fetch(
+            "https://persona-support-agent-q4pf.onrender.com/chat",
+            {
+
+                method: "POST",
+
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+
+
+                body: JSON.stringify(
+                    {
+
+                        message: question
+
+                    }
+                )
+
+            }
+        )
+
+
+
+
+        let data = await response.json()
+
+
+
+
+
+        // remove typing message
+
+        document.getElementById(typingId).remove()
+
+
+
+
+
+        // show AI answer
+
+        chatBox.innerHTML +=
+            `
+            <div class="bot">
+                ${data.answer}
+            </div>
+            `
+
+
+
+        saveChat("bot", data.answer)
+
+
+
+
+        chatBox.scrollTop = chatBox.scrollHeight
+
+
+    }
+
+
+    catch (error) {
+
+
+        document.getElementById(typingId).remove()
+
+
+        chatBox.innerHTML +=
+            `
+            <div class="bot">
+                ❌ Server error. Please try again.
+            </div>
+            `
+
+
+        console.log(error)
+
+    }
+
 
 
 }
 
 
 
-function clearChat(){
+
+
+
+function clearChat() {
 
 
     localStorage.removeItem("chatHistory")
@@ -185,21 +223,25 @@ function clearChat(){
 
 
 
+
+
 document
-.getElementById("user-input")
-.addEventListener(
-    "keydown",
-    function(event){
+    .getElementById("user-input")
+    .addEventListener(
+        "keydown",
+
+        function (event) {
 
 
-        if(event.key === "Enter"){
+            if (event.key === "Enter") {
 
 
-            sendMessage()
+                sendMessage()
+
+
+            }
 
 
         }
 
-
-    }
-)
+    )
