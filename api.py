@@ -8,6 +8,7 @@ from src.retriever import retrieve_documents
 from src.response_generator import generate_response
 
 
+
 # Create FastAPI app
 app = FastAPI(
     title="AI Support Agent",
@@ -16,24 +17,34 @@ app = FastAPI(
 )
 
 
-# Enable frontend access
+
+# Enable frontend access (CORS)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://persona-support-agent-ui.onrender.com"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
+
+
 # Request model
 class ChatRequest(BaseModel):
+
     message: str
+
+
+
 
 
 # Home route
 @app.get("/")
 def home():
+
     return {
         "status": "success",
         "message": "AI Support Agent API is running 🚀",
@@ -41,29 +52,47 @@ def home():
     }
 
 
-# Health check
+
+
+
+# Health check route
 @app.get("/health")
 def health():
+
     return {
         "status": "healthy"
     }
+
+
+
+
 
 
 # Chat API
 @app.post("/chat")
 def chat(request: ChatRequest):
 
+
+    # user question from frontend
     user_message = request.message
 
-    # detect customer persona
-    persona = detect_persona(user_message)
 
 
-    # retrieve knowledge
-    documents = retrieve_documents(user_message)
+    # detect customer emotion/persona
+    persona = detect_persona(
+        user_message
+    )
 
 
-    # generate AI answer
+
+    # get related documents
+    documents = retrieve_documents(
+        user_message
+    )
+
+
+
+    # generate AI response
     answer = generate_response(
         user_message,
         persona,
@@ -71,11 +100,14 @@ def chat(request: ChatRequest):
     )
 
 
+
+    # send response to frontend
     return {
+
         "question": user_message,
+
         "persona": persona,
+
         "answer": answer
+
     }
-
-
-
