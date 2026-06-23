@@ -1,15 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import os
 
 from src.persona_detector import detect_persona
 from src.retriever import retrieve_documents
 from src.response_generator import generate_response
 
 
-
-# Create FastAPI app
 app = FastAPI(
     title="AI Support Agent",
     description="Persona based AI Customer Support Agent",
@@ -17,34 +14,26 @@ app = FastAPI(
 )
 
 
-
-# Enable frontend access (CORS)
+# CORS FIX
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://persona-support-agent-ui.onrender.com"
+        "https://persona-support-agent-ui.onrender.com",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
     ],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-
-
-# Request model
 class ChatRequest(BaseModel):
-
     message: str
 
 
-
-
-
-# Home route
 @app.get("/")
 def home():
-
     return {
         "status": "success",
         "message": "AI Support Agent API is running 🚀",
@@ -52,62 +41,30 @@ def home():
     }
 
 
-
-
-
-# Health check route
 @app.get("/health")
 def health():
-
     return {
         "status": "healthy"
     }
 
 
-
-
-
-
-# Chat API
 @app.post("/chat")
 def chat(request: ChatRequest):
 
-
-    # user question from frontend
     user_message = request.message
 
+    persona = detect_persona(user_message)
 
+    documents = retrieve_documents(user_message)
 
-    # detect customer emotion/persona
-    persona = detect_persona(
-        user_message
-    )
-
-
-
-    # get related documents
-    documents = retrieve_documents(
-        user_message
-    )
-
-
-
-    # generate AI response
     answer = generate_response(
         user_message,
         persona,
         documents
     )
 
-
-
-    # send response to frontend
     return {
-
         "question": user_message,
-
         "persona": persona,
-
         "answer": answer
-
     }
