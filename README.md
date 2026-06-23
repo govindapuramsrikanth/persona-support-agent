@@ -1,144 +1,279 @@
-# 🤖 AI Support Agent
+# 🤖 Persona Based AI Support Agent
 
-An intelligent AI-powered customer support assistant that understands customer queries, remembers conversation context, detects customer emotions, and escalates serious issues by creating support tickets.
+An AI-powered customer support assistant that understands customer queries, detects customer emotions/personas, retrieves relevant knowledge, and generates personalized support responses using AI.
+
+The system helps businesses automate customer support by identifying different customer situations like refund requests, angry customers, confused users, and technical issues.
 
 ---
 
-## 🚀 Features
+# 🌐 Live Demo
 
-### 💬 AI Chat Support
-- Users can ask support-related questions
-- AI generates human-like responses
-- Maintains conversation context
+🚀 **Frontend Application**
 
-### 🧠 RAG (Retrieval Augmented Generation)
-- Loads company documents
-- Retrieves relevant policy information
-- Provides accurate answers based on knowledge base
+https://persona-support-agent-ui.onrender.com
 
-### 🎭 Customer Persona Detection
-Detects customer emotions like:
 
-- Angry customers
-- Normal users
-- Confused users
+⚙️ **Backend API Documentation**
 
-and changes responses accordingly.
+https://persona-support-agent-g4pf.onrender.com/docs
 
-### 🚨 Human Escalation System
-Automatically detects serious complaints and creates support tickets.
+
+---
+
+# 🚀 Features
+
+## 💬 AI Chat Support
+
+- Users can ask customer-support related questions
+- AI generates human-like support responses
+- Stores chat history for better user experience
+- Real-time chatbot interface
+
+
+---
+
+## 🧠 RAG (Retrieval Augmented Generation)
+
+- Loads support/company documents
+- Retrieves relevant information from knowledge base
+- Provides context-aware responses
+
+
+---
+
+## 🎭 Customer Persona Detection
+
+The system detects different customer personas:
+
+- 😡 Angry Customers
+- 🙂 Normal Users
+- 😕 Confused Users
+- 🔧 Technical Issue Users
+
+
+Based on the detected persona, the AI changes its response style.
+
 
 Example:
 
 User:
-"I requested refund many times. Nobody helped me."
+
+```
+I am angry. I want refund immediately.
+```
 
 System:
-- Detects frustration
-- Creates ticket
-- Sends escalation response
 
+```
+Persona: Angry Customer
 
-### 🎫 Ticket Management
-
-Stores escalated issues with:
-
-- Ticket ID
-- Customer problem
-- Emotion
-- Status
-- Created time
+Response:
+I understand your frustration.
+I am here to help resolve your issue.
+```
 
 
 ---
 
-## 🛠️ Tech Stack
+## 🎫 Support Intelligence
 
-### Backend
-- Python
-- FastAPI
-- Uvicorn
+The assistant can handle:
 
-### AI
-- Groq API
-- Llama 3 Model
+- Refund related queries
+- Product issues
+- Account problems
+- General customer questions
+- Support guidance
 
-### Vector Search
-- Sentence Transformers
-- Vector Database
 
-### Frontend
+---
+
+# ⚙️ How It Works
+
+
+```
+User Message
+
+      ↓
+
+Frontend Chat Interface
+
+      ↓
+
+FastAPI Backend
+
+      ↓
+
+Persona Detection
+
+      ↓
+
+Knowledge Retrieval (RAG)
+
+      ↓
+
+AI Response Generation
+
+      ↓
+
+Personalized Customer Reply
+```
+
+
+---
+
+# 🛠️ Tech Stack
+
+
+## Frontend
+
 - HTML
 - CSS
 - JavaScript
 
-### Version Control
+
+## Backend
+
+- Python
+- FastAPI
+- Uvicorn
+
+
+## AI
+
+- Groq API
+- Llama 3 Model
+
+
+## Vector Search / RAG
+
+- Sentence Transformers
+- Vector Database
+
+
+## Deployment
+
+- Render
+
+
+## Version Control
+
 - Git
 - GitHub
 
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
+
+
+```text
 persona-support-agent/
 
+│
 ├── src/
-│ ├── document_loader.py
-│ ├── retriever.py
-│ ├── persona_detector.py
-│ ├── response_generator.py
-│ ├── escalation.py
-│ └── ticket_manager.py
+│
+│   ├── document_loader.py
+│   ├── retriever.py
+│   ├── persona_detector.py
+│   └── response_generator.py
+│
 │
 ├── frontend/
-│ ├── index.html
-│ ├── style.css
-│ └── script.js
+│
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
 │
 ├── data/
-│ └── refund_policy.md
+│
+│   └── refund_policy.md
+│
 │
 ├── api.py
 ├── requirements.txt
-└── README.md
+├── README.md
 
+```
 
 
 ---
 
-## ▶️ How To Run
+# ▶️ How To Run Locally
 
-Clone repository:
+
+Clone the repository:
+
 
 ```bash
-git clone <repository-url>
-
+git clone <your-repository-url>
+```
 
 
 Install dependencies:
+
+
+```bash
 pip install -r requirements.txt
+```
 
 
+Start FastAPI backend:
 
-Start backend:
+
+```bash
 uvicorn api:app
-
+```
 
 
 Open frontend:
+
+
+```text
 src/frontend/index.html
+```
 
 
+---
 
-🌟 Future Improvements
-User authentication
-Database integration
-Admin dashboard
-Voice support
-WhatsApp integration
+# 📌 Example Usage
 
 
+User:
 
-👨‍💻 Developer
+```
+My account login is not working.
+```
 
-Built by Srikanth Raipally
+
+AI:
+
+```
+I understand you are facing login issues.
+
+Let me help you troubleshoot your problem.
+```
+
+
+---
+
+
+# 🚀 Future Improvements
+
+- User authentication
+- Database integration
+- Admin dashboard
+- Voice assistant support
+- WhatsApp integration
+- Multi-language support
+
+
+---
+
+
+# 👨‍💻 Developer
+
+Built by
+
+**Srikanth Raipally**   and **Dudam Lokesh**
