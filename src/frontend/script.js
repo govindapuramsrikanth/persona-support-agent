@@ -118,7 +118,7 @@ async function sendMessage() {
 
 
         let response = await fetch(
-            "https://persona-support-agent-q4pf.onrender.com/chat",
+            "https://persona-support-agent-g4pf.onrender.com/chat",
             {
 
                 method: "POST",
