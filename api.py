@@ -7,21 +7,13 @@ from src.retriever import retrieve_documents
 from src.response_generator import generate_response
 
 
-app = FastAPI(
-    title="AI Support Agent",
-    description="Persona based AI Customer Support Agent",
-    version="1.0.0"
-)
+app = FastAPI()
 
 
-# CORS FIX
+# ADD CORS IMMEDIATELY AFTER app creation
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://persona-support-agent-ui.onrender.com",
-        "http://localhost:5500",
-        "http://127.0.0.1:5500"
-    ],
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,8 +28,7 @@ class ChatRequest(BaseModel):
 def home():
     return {
         "status": "success",
-        "message": "AI Support Agent API is running 🚀",
-        "docs": "/docs"
+        "message": "AI Support Agent API is running 🚀"
     }
 
 
@@ -49,7 +40,7 @@ def health():
 
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+async def chat(request: ChatRequest):
 
     user_message = request.message
 
