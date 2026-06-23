@@ -1,26 +1,40 @@
 // Load old messages when page opens
 window.onload = function () {
 
-    let oldChats = JSON.parse(localStorage.getItem("chatHistory")) || [];
+    let oldChats = JSON.parse(localStorage.getItem("chatHistory")) || []
 
-    let chatBox = document.getElementById("chat-box");
+    let chatBox = document.getElementById("chat-box")
+
+
+    if(oldChats.length === 0){
+
+        chatBox.innerHTML =
+        `
+        <div class="bot">
+            🤖 Hello! I am your AI Support Agent.
+            <br><br>
+            How can I help you today?
+        </div>
+        `
+
+    }
 
 
     oldChats.forEach(chat => {
 
-        chatBox.innerHTML += `
-            <div class="${chat.type}">
-                ${chat.message}
-            </div>
-        `;
+        chatBox.innerHTML +=
+        `
+        <div class="${chat.type}">
+            ${chat.message}
+        </div>
+        `
 
-    });
+    })
 
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.scrollTop = chatBox.scrollHeight
 
-};
-
+}
 
 
 

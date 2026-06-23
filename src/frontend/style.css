@@ -140,36 +140,27 @@ h2 {
 
     max-width: 80%;
 
-
     background: #eeeeee;
-
 
     color: #222;
 
-
-    padding: 12px;
-
+    padding: 14px;
 
     margin: 10px auto 10px 0;
 
-
     border-radius: 15px 15px 15px 0;
 
-
-    /* improves long AI answers */
-    line-height: 1.5;
-
-
-    word-wrap: break-word;
-
-
-    overflow-wrap: break-word;
-
-
-    white-space: normal;
-
-
     animation: pop 0.3s ease;
+
+
+    /* readability improvement */
+    line-height: 1.6;
+
+    font-size: 15px;
+
+    white-space: pre-line;
+
+    word-spacing: 2px;
 
 }
 
